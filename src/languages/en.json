@@ -1,0 +1,19 @@
+{
+  "name": "name",
+  "email": "Email",
+  "password": "Password",
+  "sign-in": "Sign in",
+  "sign-up": "Sign Up",
+  "register": "Register",
+  "not-account": "Don't have an account?",
+  "have-account": "Already have an account?",
+  "search-doctor": "Search for doctors online",
+  "make-appointment": "Make an appointment without leaving your home",
+
+  "validation-name": "The name is too short",
+  "validation-requiredName": "The 'Name' field is required",
+  "validation-email": "Please enter a valid email address",
+  "validation-requiredEmail": "The 'Email' field is required",
+  "validation-password": "Password is too short",
+  "validation-requiredPassword": "The 'Password' field is required"
+}
