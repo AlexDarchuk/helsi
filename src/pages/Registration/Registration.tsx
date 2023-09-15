@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { Paper, Avatar, Typography, Button, Box, Link } from '@mui/material';
+import { Avatar, Typography, Button, Box, Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Formik, Form } from 'formik';
-import styled from 'styled-components';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { pink } from '@mui/material/colors';
 
@@ -10,21 +10,19 @@ import { loginRoute } from '../../routes';
 import validationSchema from './validationSchema';
 import FormikInput from '../../components/FormikInput';
 
-const StyledPaper = styled(Paper)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 20px 40px;
-  flex: 0.8;
-`;
-
 const Registration: FC = () => {
   const intl = useIntl();
 
   return (
-    <StyledPaper elevation={0}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      height="100%"
+      px={5}
+      py={2.5}
+    >
       <Box display="flex" flexDirection="column" alignItems="center">
         <Avatar sx={{ backgroundColor: pink[500] }}>
           <LockOutlinedIcon />
@@ -86,11 +84,11 @@ const Registration: FC = () => {
           id="have-account"
           defaultMessage="Already have an account?"
         />
-        <Link href={loginRoute} variant="body2" ml={0.75}>
+        <Link component={RouterLink} to={loginRoute} variant="body2" ml={0.75}>
           <FormattedMessage id="sign-in" defaultMessage="Sign In" />
         </Link>
       </Typography>
-    </StyledPaper>
+    </Box>
   );
 };
 
