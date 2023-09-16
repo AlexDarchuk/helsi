@@ -1,0 +1,19 @@
+{
+  "name": "Ім'я",
+  "email": "Електронна пошта",
+  "password": "Пароль",
+  "sign-in": "Увійти",
+  "sign-up": "Зареєструватися",
+  "register": "Зареєструватися",
+  "not-account": "Немає облікового запису?",
+  "have-account": "Вже є аккаунт?",
+  "search-doctor": "Шукайте лікарів онлайн",
+  "make-appointment": "Записуйтесь на прийом не виходячи з дому",
+
+  "validation-name": "Ім'я занадто коротке",
+  "validation-requiredName": "Поле 'Ім'я' є обов'язковим",
+  "validation-email": "Будь ласка, введіть правильну адресу електронної пошти",
+  "validation-requiredEmail": "Поле 'Електронна пошта' є обов'язковим",
+  "validation-password": "Пароль занадто короткий",
+  "validation-requiredPassword": "Поле 'Пароль' є обов'язковим"
+}
