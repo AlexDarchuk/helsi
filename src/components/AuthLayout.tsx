@@ -1,7 +1,9 @@
 import { FC, ReactNode } from 'react';
-import { Typography, Box, Grid } from '@mui/material'; // Импорт Grid
+import { Typography, Box, Grid } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+
 import { ReactComponent as Logo } from '../assets/helsi-logo.svg';
+import SwitchLanguage from './SwitchLanguage';
 
 interface IAuthLayout {
   children: ReactNode;
@@ -18,7 +20,7 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
             background: 'linear-gradient(98.66deg, #d6e9ff 2.52%, #ffddf7)',
           }}
         >
-          <Box p={2.5}>
+          <Box width="214px" height="137px" p={2.5}>
             <Logo />
           </Box>
           <Box
@@ -44,7 +46,15 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
           </Box>
         </Box>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        display="flex"
+        flexDirection="column"
+        p="20px 40px"
+      >
+        <SwitchLanguage />
         {children}
       </Grid>
     </Grid>

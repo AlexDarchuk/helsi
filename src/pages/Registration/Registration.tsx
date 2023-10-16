@@ -1,17 +1,44 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { updateProfile } from 'firebase/auth';
 import { Avatar, Typography, Button, Box, Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Formik, Form } from 'formik';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { pink } from '@mui/material/colors';
 
-import { loginRoute } from '../../routes';
-import validationSchema from './validationSchema';
+import { AuthContext } from '../../context/AuthContext';
+import { loginRoute, homeRoute } from '../../routes';
 import FormikInput from '../../components/FormikInput';
+import { auth } from '../../firebaseConfig';
+
+import validationSchema from './validationSchema';
+
+interface IRegistration {
+  email: string;
+  password: string;
+  name: string;
+}
 
 const Registration: FC = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
+  const { createUser, saveUserDataToFirestore } = useContext(AuthContext);
+
+  const handleRegistration = ({ email, password, name }: IRegistration) => {
+    createUser({ email, password })
+      .then((userCredential) => {
+        return updateProfile(userCredential.user, {
+          displayName: name,
+        });
+      })
+      .then(() => {
+        const user = auth.currentUser;
+        saveUserDataToFirestore(user, name, email);
+      })
+      .then(() => navigate(homeRoute))
+      .catch(console.error);
+  };
 
   return (
     <Box
@@ -20,8 +47,6 @@ const Registration: FC = () => {
       justifyContent="center"
       alignItems="center"
       height="100%"
-      px={5}
-      py={2.5}
     >
       <Box display="flex" flexDirection="column" alignItems="center">
         <Avatar sx={{ backgroundColor: pink[500] }}>
@@ -31,14 +56,14 @@ const Registration: FC = () => {
           <FormattedMessage id="register" defaultMessage="Register" />
         </Typography>
       </Box>
-      <Formik
+      <Formik<IRegistration>
         initialValues={{
           name: '',
           email: '',
           password: '',
         }}
         validationSchema={() => validationSchema(intl)}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => handleRegistration(values)}
       >
         {({ isSubmitting, isValid }) => (
           <Form style={{ width: '100%' }}>

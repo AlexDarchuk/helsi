@@ -1,17 +1,42 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { Avatar, Typography, Button, Box, Link } from '@mui/material';
 import { pink } from '@mui/material/colors';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Formik, Form } from 'formik';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { registerRoute } from '../../routes';
-import validationSchema from './validationSchema';
+import { AuthContext } from '../../context/AuthContext';
+import { registerRoute, homeRoute } from '../../routes';
 import FormikInput from '../../components/FormikInput';
+
+import validationSchema from './validationSchema';
+
+interface ILogin {
+  email: string;
+  password: string;
+}
 
 const Login: FC = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
+  const { signIn } = useContext(AuthContext);
+
+  const handleLogin = ({ email, password }: ILogin) => {
+    signIn({ email, password })
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        if (user) {
+          const userDocRef = doc(getFirestore(), 'users', user.uid);
+          updateDoc(userDocRef, { onlineStatus: true });
+        }
+
+        navigate(homeRoute);
+      })
+      .catch(console.error);
+  };
 
   return (
     <Box
@@ -20,8 +45,6 @@ const Login: FC = () => {
       justifyContent="center"
       alignItems="center"
       height="100%"
-      px={5}
-      py={2.5}
     >
       <Box display="flex" flexDirection="column" alignItems="center">
         <Avatar sx={{ backgroundColor: pink[500] }}>
@@ -31,13 +54,13 @@ const Login: FC = () => {
           <FormattedMessage id="sign-in" defaultMessage="Sign in" />
         </Typography>
       </Box>
-      <Formik
+      <Formik<ILogin>
         initialValues={{
           email: '',
           password: '',
         }}
         validationSchema={() => validationSchema(intl)}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => handleLogin(values)}
       >
         {({ isSubmitting, isValid }) => (
           <Form style={{ width: '100%' }}>

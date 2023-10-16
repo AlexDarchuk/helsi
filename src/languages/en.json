@@ -4,16 +4,22 @@
   "password": "Password",
   "sign-in": "Sign in",
   "sign-up": "Sign Up",
+  "log-out": "Logout",
   "register": "Register",
   "not-account": "Don't have an account?",
   "have-account": "Already have an account?",
   "search-doctor": "Search for doctors online",
   "make-appointment": "Make an appointment without leaving your home",
+  "not-found": "Page not found",
+  "not-found-description": "The page you are looking for doesn't exist or an other error occurred.",
 
   "validation-name": "The name is too short",
   "validation-requiredName": "The 'Name' field is required",
   "validation-email": "Please enter a valid email address",
   "validation-requiredEmail": "The 'Email' field is required",
   "validation-password": "Password is too short",
-  "validation-requiredPassword": "The 'Password' field is required"
+  "validation-requiredPassword": "The 'Password' field is required",
+
+  "online-reception": "Online reception",
+  "about-helsi": "About Helsi"
 }
