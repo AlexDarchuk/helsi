@@ -4,17 +4,13 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { red } from '@mui/material/colors';
 import { useField } from 'formik';
 
-interface IFormikInput {
-  name: string;
-  type: string;
-  label: string;
-}
+const FormikInput: FC<TextFieldProps> = (props) => {
+  const { name } = props;
+  const [field, meta] = useField(name || '');
 
-type TFormikInput = TextFieldProps & IFormikInput;
-
-const FormikInput: FC<TFormikInput> = (props) => {
-  const { name, type, label } = props;
-  const [field, meta] = useField(name);
+  if (!name) {
+    return null;
+  }
 
   const hasError = meta.error && meta.touched;
 
@@ -22,13 +18,12 @@ const FormikInput: FC<TFormikInput> = (props) => {
     <Box display="flex" flexDirection="column">
       <TextField
         {...field}
+        {...props}
         name={name}
         variant="outlined"
         margin="normal"
-        type={type}
         fullWidth
         id={name}
-        label={label}
         error={!!hasError}
       />
       <Box visibility={hasError ? 'visible' : 'hidden'} height="24px">
