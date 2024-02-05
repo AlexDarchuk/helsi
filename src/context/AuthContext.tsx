@@ -4,7 +4,6 @@ import {
   ReactNode,
   useEffect,
   useState,
-  SetStateAction,
   useMemo,
   useCallback,
 } from 'react';
@@ -13,34 +12,20 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   UserCredential,
-  User,
   signOut,
 } from 'firebase/auth';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 
 import { auth } from '../firebaseConfig';
+import { IUserProfile, TAuthUser } from '../types/types';
 
 interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-type TUserType = 'patient' | 'doctor';
-
-type TAuthUser = User | null;
-
 interface IAuthUser {
   email: string;
   password: string;
-}
-
-interface IUser {
-  userID: string;
-  name: string;
-  email: string;
-  appointments: string[];
-  onlineStatus: boolean;
-  notifications: string[];
-  role: TUserType;
 }
 
 interface IAuth {
@@ -54,7 +39,6 @@ interface IAuth {
   user: TAuthUser;
   logout: () => Promise<void>;
   loading: boolean;
-  setUser: (value: SetStateAction<TAuthUser>) => void;
 }
 
 export const AuthContext = createContext<IAuth>({
@@ -63,7 +47,6 @@ export const AuthContext = createContext<IAuth>({
   logout: () => Promise.resolve(),
   user: null,
   loading: true,
-  setUser: () => undefined,
   saveUserDataToFirestore: () => undefined,
 });
 
@@ -73,9 +56,15 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
   const [user, setUser] = useState<TAuthUser>(null);
   const [loading, setLoading] = useState(true);
 
+  const createUser = useCallback(({ email, password }: IAuthUser) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  }, []);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (createUser) => {
-      setUser(createUser);
+      if (createUser) {
+        setUser(createUser);
+      }
       setLoading(false);
     });
 
@@ -84,19 +73,17 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
     };
   }, []);
 
-  const createUser = useCallback(({ email, password }: IAuthUser) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  }, []);
-
   const saveUserDataToFirestore = useCallback(
-    () => (user: TAuthUser, name: string, email: string) => {
+    (user: TAuthUser, name: string, email: string) => {
       if (user) {
-        const userData: IUser = {
+        const userData: IUserProfile = {
           userID: user.uid,
           name,
           email,
+          photoURL: null,
           appointments: [],
           onlineStatus: true,
+          status: 'notSubmitted',
           notifications: [],
           role: 'patient',
         };
@@ -124,18 +111,9 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
       user,
       logout,
       loading,
-      setUser,
       saveUserDataToFirestore,
     }),
-    [
-      createUser,
-      signIn,
-      user,
-      logout,
-      loading,
-      setUser,
-      saveUserDataToFirestore,
-    ]
+    [createUser, signIn, user, logout, loading, saveUserDataToFirestore]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

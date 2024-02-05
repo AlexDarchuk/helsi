@@ -5,7 +5,15 @@ import { IntlProvider } from 'react-intl';
 import enMessages from './languages/en.json';
 import ukMessages from './languages/uk.json';
 import { useAppSelector } from './hooks/reduxHooks';
-import { loginRoute, homeRoute, registerRoute } from './routes';
+import {
+  loginRoute,
+  homeRoute,
+  registerRoute,
+  profileRoute,
+  medicalReformRoute,
+  newDoctorRoute,
+  userProfile,
+} from './routes';
 import AuthRoutes from './components/AuthRoutes';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './components/MainLayout';
@@ -13,7 +21,11 @@ import AuthLayout from './components/AuthLayout';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
 import Home from './pages/Home/Home';
+import Profile from './pages/Profile/Profile';
 import NotFound from './pages/NotFound/NotFound';
+import MedicalReform from './pages/MedicalReform/MedicalReform';
+import NewDoctor from './pages/NewDoctor/NewDoctor';
+import DoctorProfile from './pages/DoctorProfile/DoctorProfile';
 
 interface Messages {
   [key: string]: string;
@@ -57,6 +69,46 @@ const AppRouter: FC = () => {
               <ProtectedRoute>
                 <MainLayout>
                   <Home />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={profileRoute}
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Profile />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={medicalReformRoute}
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <MedicalReform />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={newDoctorRoute}
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <NewDoctor />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={userProfile}
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <DoctorProfile />
                 </MainLayout>
               </ProtectedRoute>
             }
