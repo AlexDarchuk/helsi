@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Grid } from '@mui/material';
 
 import Header from './Header';
+import Footer from './Footer';
 
 interface IMainLayout {
   children: ReactNode;
@@ -17,6 +18,7 @@ const MainLayout: FC<IMainLayout> = ({ children }) => {
         item
         xs={12}
         height="75vh"
+        overflow="auto"
         sx={{
           background: 'linear-gradient(98.66deg, #d6e9ff 2.52%, #ffddf7)',
         }}
@@ -24,7 +26,7 @@ const MainLayout: FC<IMainLayout> = ({ children }) => {
         {children}
       </Grid>
       <Grid item xs={12} height="15vh">
-        Footer
+        <Footer />
       </Grid>
     </Grid>
   );

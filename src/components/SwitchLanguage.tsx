@@ -19,7 +19,7 @@ const SwitchLanguage: FC = () => {
   };
 
   return (
-    <Box display="flex" alignItems="center" alignSelf="end" gap="5px">
+    <Box display="flex" alignItems="center" ml="auto" gap="5px">
       <Typography
         variant="h5"
         color={selectedLanguage !== 'uk' ? pink[500] : undefined}

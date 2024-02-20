@@ -3,16 +3,9 @@ import { TextField, TextFieldProps, Box } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { red } from '@mui/material/colors';
 import { useField } from 'formik';
-import { PatternFormat } from 'react-number-format';
 
-interface FormikInputProps {
-  phone?: boolean;
-}
-
-type TFormikInput = FormikInputProps & TextFieldProps;
-
-const FormikInput: FC<TFormikInput> = (props) => {
-  const { name, phone, label, ...rest } = props;
+const FormikTextArea: FC<TextFieldProps> = (props) => {
+  const { name } = props;
   const [field, meta] = useField<string>(name || '');
 
   if (!name) {
@@ -21,39 +14,20 @@ const FormikInput: FC<TFormikInput> = (props) => {
 
   const hasError = meta.error && meta.touched;
 
-  const renderInput = () => {
-    if (phone) {
-      return (
-        <PatternFormat
-          {...field}
-          label={label}
-          name={name}
-          format="+##(###) ### ## ##"
-          customInput={TextField}
-          error={!!hasError}
-          id={name}
-        />
-      );
-    }
-
-    return (
+  return (
+    <Box display="flex" flexDirection="column">
       <TextField
         {...field}
-        {...rest}
+        {...props}
         name={name}
-        label={label}
         variant="outlined"
         margin="normal"
+        multiline
+        rows={4}
         fullWidth
         id={name}
         error={!!hasError}
       />
-    );
-  };
-
-  return (
-    <Box display="flex" flexDirection="column">
-      {renderInput()}
       <Box visibility={hasError ? 'visible' : 'hidden'} height="24px">
         {meta.error && meta.touched ? (
           <Box display="flex" alignItems="center" gap={0.625} color={red[700]}>
@@ -66,4 +40,4 @@ const FormikInput: FC<TFormikInput> = (props) => {
   );
 };
 
-export default FormikInput;
+export default FormikTextArea;
