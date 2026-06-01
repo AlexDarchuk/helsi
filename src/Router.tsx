@@ -13,6 +13,7 @@ import {
   medicalReformRoute,
   newDoctorRoute,
   userProfile,
+  listOfDoctors,
 } from './routes';
 import AuthRoutes from './components/AuthRoutes';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -26,6 +27,7 @@ import NotFound from './pages/NotFound/NotFound';
 import MedicalReform from './pages/MedicalReform/MedicalReform';
 import NewDoctor from './pages/NewDoctor/NewDoctor';
 import DoctorProfile from './pages/DoctorProfile/DoctorProfile';
+import ListOfDoctors from './pages/ListOfDoctors/ListOfDoctors';
 
 interface Messages {
   [key: string]: string;
@@ -109,6 +111,16 @@ const AppRouter: FC = () => {
               <ProtectedRoute>
                 <MainLayout>
                   <DoctorProfile />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={listOfDoctors}
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <ListOfDoctors />
                 </MainLayout>
               </ProtectedRoute>
             }

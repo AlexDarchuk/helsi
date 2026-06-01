@@ -1,5 +1,5 @@
 {
-  "name": "name",
+  "name": "Name",
   "email": "Email",
   "password": "Password",
   "sign-in": "Sign in",
@@ -12,6 +12,7 @@
   "reject": "Reject",
   "register": "Register",
   "profile": "Profile",
+  "action": "Action",
   "not-account": "Don't have an account?",
   "have-account": "Already have an account?",
   "search-doctor": "Search for doctors online",
@@ -99,9 +100,12 @@
   "pediatrician": "Pediatrician",
   "surgeon": "Surgeon",
   "mbbs": "MBBS",
+  "ms": "Specialist doctor",
   "md": "MD",
   "mds": "MDS",
 
   "notification-list": "The notification list is empty.",
-  "working-days": "Working days"
+  "working-days": "Working days",
+
+  "list-of-doctors": "List of Doctors"
 }

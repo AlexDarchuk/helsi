@@ -13,6 +13,7 @@ import {
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { grey } from '@mui/material/colors';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import { AuthContext } from '../context/AuthContext';
 import { ProfileContext } from '../context/ProfileContext';
@@ -21,24 +22,25 @@ import { ReactComponent as Logo } from '../assets/helsi-logo.svg';
 import SwitchLanguage from './SwitchLanguage';
 import Notifications from './Notifications';
 import AdminNotifications from './AdminNotifications';
+import SideBar from './SideBar';
 
 const Header: FC = () => {
   const intl = useIntl();
+
   const { logout, user } = useContext(AuthContext);
   const { currentUser } = useContext(ProfileContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const open = Boolean(anchorEl);
 
   const handleLogOut = async () => {
-    await logout();
-    if (!user) {
-      return;
+    if (user) {
+      const userDocRef = doc(getFirestore(), 'users', user.uid);
+      await updateDoc(userDocRef, { onlineStatus: false });
     }
-
-    const userDocRef = doc(getFirestore(), 'users', user.uid);
-    updateDoc(userDocRef, { onlineStatus: false });
+    await logout();
   };
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -84,11 +86,17 @@ const Header: FC = () => {
       height="100%"
       px={2.5}
     >
-      <Box width="90px" height="50px">
-        <Link component={RouterLink} to={homeRoute}>
-          <Logo />
-        </Link>
+      <Box display="flex" alignItems="center" gap="10px">
+        <IconButton onClick={() => setDrawerOpen(true)} size="medium">
+          <MenuIcon fontSize="medium" />
+        </IconButton>
+        <Box width="90px" height="50px">
+          <Link component={RouterLink} to={homeRoute}>
+            <Logo />
+          </Link>
+        </Box>
       </Box>
+      <SideBar drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
       <Box
         display="flex"
         justifyContent="end"

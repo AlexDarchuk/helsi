@@ -8,7 +8,7 @@ type NotificationType = 'forApproval';
 
 export type TAuthUser = User | null;
 
-export type TProfile = IDoctorProfile | IUserProfile;
+export type TProfile = IDoctorProfile & IUserProfile;
 
 export interface INotifications {
   name: string;
