@@ -9,3 +9,4 @@ export const medicalReformRoute = '/medical-reform';
 export const newDoctorRoute = '/new-doctor';
 
 export const userProfile = `${profileRoute}/:id`;
+export const listOfDoctorsRoute = '/doctors';
