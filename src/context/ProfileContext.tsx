@@ -28,7 +28,7 @@ interface IProcessApproval {
 
 interface IProfile {
   currentUser: TProfile | null;
-  usersList: TProfile[];
+  doctorsList: TProfile[];
   saveDoctorDataToFirestore: (
     user: TProfile,
     data: IDoctorProfile
@@ -42,7 +42,7 @@ interface IProfile {
 
 export const ProfileContext = createContext<IProfile>({
   currentUser: null,
-  usersList: [],
+  doctorsList: [],
   saveDoctorDataToFirestore: () => Promise.resolve(),
   updateDoctorDataToFirestore: () => Promise.resolve(),
   processApprovalStatus: () => undefined,
@@ -53,19 +53,22 @@ export const ProfileContextProvider: FC<ProfileContextProviderProps> = ({
 }) => {
   const { user } = useContext(AuthContext);
   const { currentUser, fetchUserData } = useFetchUser();
-  const [usersList, setUsersList] = useState<TProfile[]>([]);
+  const [doctorsList, setDoctorsList] = useState<TProfile[]>([]);
 
-  const fetchAllUsers = async () => {
-    const usersCollection = collection(db, 'users');
+  const fetchAllDoctors = async () => {
+    const usersCollection = query(
+      collection(db, 'users'),
+      where('role', '==', 'doctor')
+    );
     const usersSnapshot = await getDocs(usersCollection);
     const usersData = usersSnapshot.docs.map((doc) => doc.data()) as TProfile[];
-    setUsersList(usersData);
+    setDoctorsList(usersData);
   };
 
   useEffect(() => {
     if (user) {
       fetchUserData(user.uid);
-      fetchAllUsers();
+      fetchAllDoctors();
     }
   }, [user, fetchUserData]);
 
@@ -155,14 +158,14 @@ export const ProfileContextProvider: FC<ProfileContextProviderProps> = ({
   const value = useMemo(
     () => ({
       currentUser,
-      usersList,
+      doctorsList,
       saveDoctorDataToFirestore,
       updateDoctorDataToFirestore,
       processApprovalStatus,
     }),
     [
       currentUser,
-      usersList,
+      doctorsList,
       saveDoctorDataToFirestore,
       updateDoctorDataToFirestore,
       processApprovalStatus,

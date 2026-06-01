@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { Avatar, Typography, Button, Box, Link } from '@mui/material';
 import { pink } from '@mui/material/colors';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Formik, Form } from 'formik';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -21,7 +21,10 @@ interface ILogin {
 const Login: FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const location = useLocation();
   const { signIn } = useContext(AuthContext);
+
+  const from = (location.state as { from?: Location })?.from?.pathname ?? homeRoute;
 
   const handleLogin = ({ email, password }: ILogin) => {
     signIn({ email, password })
@@ -33,7 +36,7 @@ const Login: FC = () => {
           updateDoc(userDocRef, { onlineStatus: true });
         }
 
-        navigate(homeRoute);
+        navigate(from, { replace: true });
       })
       .catch(console.error);
   };

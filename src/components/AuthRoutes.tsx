@@ -17,7 +17,7 @@ const AuthRoutes: FC<IAuthRoutes> = ({ children }) => {
   }
 
   if (user) {
-    return <Navigate to={homeRoute} />;
+    return <Navigate to={homeRoute} replace />;
   }
 
   return children;

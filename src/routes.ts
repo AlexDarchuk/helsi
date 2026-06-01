@@ -7,5 +7,6 @@ export const homeRoute = '/';
 export const profileRoute = '/profile';
 export const medicalReformRoute = '/medical-reform';
 export const newDoctorRoute = '/new-doctor';
+export const listOfDoctors = '/list-of-doctors';
 
 export const userProfile = `${profileRoute}/:id`;

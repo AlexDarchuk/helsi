@@ -1,5 +1,5 @@
 import { FC, ReactNode, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { AuthContext } from '../context/AuthContext';
 import { loginRoute } from '../routes';
@@ -11,13 +11,14 @@ interface IProtectedRoute {
 
 const ProtectedRoute: FC<IProtectedRoute> = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
+  const location = useLocation();
 
   if (loading) {
     return <Loader />;
   }
 
   if (!user) {
-    return <Navigate to={loginRoute} />;
+    return <Navigate to={loginRoute} state={{ from: location }} replace />;
   }
 
   return children;
