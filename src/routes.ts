@@ -11,3 +11,4 @@ export const listOfDoctors = '/list-of-doctors';
 
 export const userProfile = `${profileRoute}/:id`;
 export const listOfDoctorsRoute = '/doctors';
+export const doctorsBySpecialtyRoute = '/doctors/:specialty';

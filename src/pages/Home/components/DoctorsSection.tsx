@@ -26,9 +26,9 @@ function isDoctorProfile(user: TProfile): user is IDoctorProfile {
 const DoctorsSection: FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { usersList } = useContext(ProfileContext);
+  const { doctorsList } = useContext(ProfileContext);
 
-  const doctors = usersList.filter(isDoctorProfile);
+  const doctors = doctorsList.filter(isDoctorProfile);
 
   return (
     <Box py={10} px={{ xs: 3, md: 8 }} bgcolor="#f9fafb">
@@ -46,10 +46,19 @@ const DoctorsSection: FC = () => {
 
       {doctors.length === 0 ? (
         <Typography textAlign="center" color="text.secondary" variant="h6">
-          <FormattedMessage id="doctors-no-doctors" defaultMessage="No doctors available yet" />
+          <FormattedMessage
+            id="doctors-no-doctors"
+            defaultMessage="No doctors available yet"
+          />
         </Typography>
       ) : (
-        <Grid container spacing={3} justifyContent="center" maxWidth="1100px" mx="auto">
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          maxWidth="1100px"
+          mx="auto"
+        >
           {doctors.map((doctor) => (
             <Grid item xs={12} sm={6} md={4} key={doctor.userID}>
               <Card
@@ -74,10 +83,18 @@ const DoctorsSection: FC = () => {
                     <Avatar
                       src={doctor.photoURL ?? ''}
                       alt={`${doctor.name} ${doctor.lastName}`}
-                      sx={{ width: 72, height: 72, border: '2px solid #e8f5ee' }}
+                      sx={{
+                        width: 72,
+                        height: 72,
+                        border: '2px solid #e8f5ee',
+                      }}
                     />
                     <Box>
-                      <Typography variant="h6" fontWeight={700} lineHeight={1.2}>
+                      <Typography
+                        variant="h6"
+                        fontWeight={700}
+                        lineHeight={1.2}
+                      >
                         {doctor.name} {doctor.lastName}
                       </Typography>
                       {doctor.specialty && (
@@ -102,7 +119,9 @@ const DoctorsSection: FC = () => {
                   <Box display="flex" flexDirection="column" gap={1}>
                     {doctor.experience != null && (
                       <Box display="flex" alignItems="center" gap={1}>
-                        <WorkOutlineOutlinedIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+                        <WorkOutlineOutlinedIcon
+                          sx={{ fontSize: 18, color: 'text.secondary' }}
+                        />
                         <Typography variant="body2" color="text.secondary">
                           <FormattedMessage
                             id="doctors-experience"
@@ -114,7 +133,9 @@ const DoctorsSection: FC = () => {
                     )}
                     {doctor.fee != null && (
                       <Box display="flex" alignItems="center" gap={1}>
-                        <PaidOutlinedIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+                        <PaidOutlinedIcon
+                          sx={{ fontSize: 18, color: 'text.secondary' }}
+                        />
                         <Typography variant="body2" color="text.secondary">
                           {doctor.fee} ₴
                         </Typography>
@@ -140,7 +161,10 @@ const DoctorsSection: FC = () => {
                       },
                     }}
                   >
-                    <FormattedMessage id="doctors-view-profile" defaultMessage="View profile" />
+                    <FormattedMessage
+                      id="doctors-view-profile"
+                      defaultMessage="View profile"
+                    />
                   </Button>
                 </CardActions>
               </Card>

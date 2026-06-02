@@ -14,6 +14,7 @@ import {
   newDoctorRoute,
   userProfile,
   listOfDoctors,
+  doctorsBySpecialtyRoute,
 } from './routes';
 import AuthRoutes from './components/AuthRoutes';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -28,6 +29,7 @@ import MedicalReform from './pages/MedicalReform/MedicalReform';
 import NewDoctor from './pages/NewDoctor/NewDoctor';
 import DoctorProfile from './pages/DoctorProfile/DoctorProfile';
 import ListOfDoctors from './pages/ListOfDoctors/ListOfDoctors';
+import DoctorsBySpecialty from './pages/DoctorsBySpecialty/DoctorsBySpecialty';
 
 interface Messages {
   [key: string]: string;
@@ -43,7 +45,7 @@ const AppRouter: FC = () => {
 
   return (
     <IntlProvider locale={language} messages={messages[language]}>
-      <BrowserRouter>
+      <BrowserRouter basename="/helsi">
         <Routes>
           <Route
             path={loginRoute}
@@ -121,6 +123,16 @@ const AppRouter: FC = () => {
               <ProtectedRoute>
                 <MainLayout>
                   <ListOfDoctors />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={doctorsBySpecialtyRoute}
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <DoctorsBySpecialty />
                 </MainLayout>
               </ProtectedRoute>
             }

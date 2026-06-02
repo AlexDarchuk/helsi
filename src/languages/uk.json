@@ -107,5 +107,11 @@
   "notification-list": "Список сповіщень порожній.",
   "working-days": "Робочі дні",
 
-  "list-of-doctors": "Cписок лікарів"
+  "list-of-doctors": "Cписок лікарів",
+
+  "breadcrumb-home": "Головна",
+  "specialty-doctors-found": "{count, plural, one {Знайдено # спеціаліста} few {Знайдено # спеціалісти} many {Знайдено # спеціалістів} other {Знайдено # спеціалістів}}",
+  "specialty-no-doctors": "{specialty} поки немає",
+  "specialty-no-doctors-desc": "Спеціалісти з'являться найближчим часом. Перевірте пізніше.",
+  "specialty-back-btn": "Обрати іншу спеціальність"
 }
