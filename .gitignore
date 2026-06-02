@@ -69,3 +69,9 @@ public/env/env-config.js
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Claude Code local settings (contains secrets)
+.claude/settings.local.json
+
+# Build output
+dist/

@@ -107,5 +107,11 @@
   "notification-list": "The notification list is empty.",
   "working-days": "Working days",
 
-  "list-of-doctors": "List of Doctors"
+  "list-of-doctors": "List of Doctors",
+
+  "breadcrumb-home": "Home",
+  "specialty-doctors-found": "{count, plural, one {# specialist found} other {# specialists found}}",
+  "specialty-no-doctors": "No {specialty} available yet",
+  "specialty-no-doctors-desc": "Specialists will appear soon. Check back later.",
+  "specialty-back-btn": "Choose another specialty"
 }

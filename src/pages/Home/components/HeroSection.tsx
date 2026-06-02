@@ -1,5 +1,11 @@
 import { FC, useContext, useMemo, useState } from 'react';
-import { Box, Typography, Button, Autocomplete, TextField } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Autocomplete,
+  TextField,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +25,13 @@ function isDoctorProfile(user: TProfile): user is IDoctorProfile {
 const HeroSection: FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { usersList } = useContext(ProfileContext);
-  const [selectedOption, setSelectedOption] = useState<SearchOption | null>(null);
+  const { doctorsList } = useContext(ProfileContext);
+  const [selectedOption, setSelectedOption] = useState<SearchOption | null>(
+    null
+  );
 
   const options = useMemo<SearchOption[]>(() => {
-    const doctors = usersList.filter(isDoctorProfile);
+    const doctors = doctorsList.filter(isDoctorProfile);
 
     const specialtyOptions: SearchOption[] = Array.from(
       new Set(doctors.map((d) => d.specialty).filter(Boolean))
@@ -40,7 +48,7 @@ const HeroSection: FC = () => {
     }));
 
     return [...specialtyOptions, ...doctorOptions];
-  }, [usersList, intl]);
+  }, [doctorsList, intl]);
 
   const handleSearch = () => {
     if (!selectedOption) return;
@@ -55,7 +63,8 @@ const HeroSection: FC = () => {
   return (
     <Box
       sx={{
-        background: 'linear-gradient(135deg, #1a9e5c 0%, #0d7a45 60%, #095e34 100%)',
+        background:
+          'linear-gradient(135deg, #1a9e5c 0%, #0d7a45 60%, #095e34 100%)',
         py: { xs: 8, md: 12 },
         px: { xs: 3, md: 8 },
         display: 'flex',
@@ -71,7 +80,10 @@ const HeroSection: FC = () => {
         textAlign="center"
         sx={{ fontSize: { xs: '2rem', md: '3rem' } }}
       >
-        <FormattedMessage id="hero-title" defaultMessage="Find your doctor online" />
+        <FormattedMessage
+          id="hero-title"
+          defaultMessage="Find your doctor online"
+        />
       </Typography>
 
       <Typography
@@ -99,8 +111,14 @@ const HeroSection: FC = () => {
           options={options}
           groupBy={(option) =>
             option.type === 'specialty'
-              ? intl.formatMessage({ id: 'specialty', defaultMessage: 'Specialty' })
-              : intl.formatMessage({ id: 'first-name', defaultMessage: 'Doctor' })
+              ? intl.formatMessage({
+                  id: 'specialty',
+                  defaultMessage: 'Specialty',
+                })
+              : intl.formatMessage({
+                  id: 'first-name',
+                  defaultMessage: 'Doctor',
+                })
           }
           getOptionLabel={(option) => option.label}
           noOptionsText={intl.formatMessage({

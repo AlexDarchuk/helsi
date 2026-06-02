@@ -29,6 +29,7 @@ interface IProcessApproval {
 interface IProfile {
   currentUser: TProfile | null;
   doctorsList: TProfile[];
+  patientsList: TProfile[];
   saveDoctorDataToFirestore: (
     user: TProfile,
     data: IDoctorProfile
@@ -43,6 +44,7 @@ interface IProfile {
 export const ProfileContext = createContext<IProfile>({
   currentUser: null,
   doctorsList: [],
+  patientsList: [],
   saveDoctorDataToFirestore: () => Promise.resolve(),
   updateDoctorDataToFirestore: () => Promise.resolve(),
   processApprovalStatus: () => undefined,
@@ -54,6 +56,7 @@ export const ProfileContextProvider: FC<ProfileContextProviderProps> = ({
   const { user } = useContext(AuthContext);
   const { currentUser, fetchUserData } = useFetchUser();
   const [doctorsList, setDoctorsList] = useState<TProfile[]>([]);
+  const [patientsList, setPatientsList] = useState<TProfile[]>([]);
 
   const fetchAllDoctors = async () => {
     const usersCollection = query(
@@ -65,10 +68,21 @@ export const ProfileContextProvider: FC<ProfileContextProviderProps> = ({
     setDoctorsList(usersData);
   };
 
+  const fetchAllPatients = async () => {
+    const usersCollection = query(
+      collection(db, 'users'),
+      where('role', '==', 'patient')
+    );
+    const usersSnapshot = await getDocs(usersCollection);
+    const usersData = usersSnapshot.docs.map((doc) => doc.data()) as TProfile[];
+    setPatientsList(usersData);
+  };
+
   useEffect(() => {
     if (user) {
       fetchUserData(user.uid);
       fetchAllDoctors();
+      fetchAllPatients();
     }
   }, [user, fetchUserData]);
 
@@ -159,6 +173,7 @@ export const ProfileContextProvider: FC<ProfileContextProviderProps> = ({
     () => ({
       currentUser,
       doctorsList,
+      patientsList,
       saveDoctorDataToFirestore,
       updateDoctorDataToFirestore,
       processApprovalStatus,
@@ -166,6 +181,7 @@ export const ProfileContextProvider: FC<ProfileContextProviderProps> = ({
     [
       currentUser,
       doctorsList,
+      patientsList,
       saveDoctorDataToFirestore,
       updateDoctorDataToFirestore,
       processApprovalStatus,

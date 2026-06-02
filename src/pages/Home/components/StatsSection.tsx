@@ -50,7 +50,8 @@ const StatCard: FC<StatCardProps> = ({ labelId, value, suffix, active }) => {
         color="white"
         sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, lineHeight: 1.1 }}
       >
-        {count.toLocaleString()}{suffix}
+        {count.toLocaleString()}
+        {suffix}
       </Typography>
       <Typography variant="h6" color="rgba(255,255,255,0.8)" mt={0.5}>
         <FormattedMessage id={labelId} defaultMessage={labelId} />
@@ -60,16 +61,13 @@ const StatCard: FC<StatCardProps> = ({ labelId, value, suffix, active }) => {
 };
 
 const StatsSection: FC = () => {
-  const { usersList } = useContext(ProfileContext);
+  const { doctorsList, patientsList } = useContext(ProfileContext);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [animating, setAnimating] = useState(false);
 
-  const doctorsCount = usersList.filter((u) => u.role === 'doctor').length;
-  const patientsCount = usersList.filter((u) => u.role === 'patient').length;
-
   const stats: StatItem[] = [
-    { labelId: 'stats-doctors', value: doctorsCount, suffix: '+' },
-    { labelId: 'stats-patients', value: patientsCount, suffix: '+' },
+    { labelId: 'stats-doctors', value: doctorsList.length, suffix: '+' },
+    { labelId: 'stats-patients', value: patientsList.length, suffix: '+' },
     { labelId: 'stats-consultations', value: 10000, suffix: '+' },
     { labelId: 'stats-cities', value: 25, suffix: '+' },
   ];
